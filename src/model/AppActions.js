@@ -653,6 +653,13 @@ export class AppActions {
     });
   };
 
+  onMarkHover = (loc: Point) => {
+    this._store.dispatch({
+      type: "GAME_MARK_HOVER",
+      hoveredBoardPoint: loc
+    });
+  };
+
   onPass = (game: GameChannel) => {
     this._client.sendMessage({
       type: "GAME_MOVE",

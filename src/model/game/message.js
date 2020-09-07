@@ -407,6 +407,8 @@ function _handleGameMessage(prevState: AppState, msg: KgsMessage): AppState {
       gamesById[chanId].tree = tree;
       return { ...prevState, gamesById };
     }
+  } else if (msg.type === "GAME_MARK_HOVER") {
+    return { ...prevState, hoveredBoardPoint: msg.hoveredBoardPoint };
   }
   return prevState;
 }

@@ -11,6 +11,7 @@ import type {
 type Props = {
   game: GameChannel,
   playing?: boolean,
+  hoveredBoardPoint: ?Point,
   onClickPoint: (
     game: GameChannel,
     loc: Point,
@@ -55,7 +56,7 @@ export default class BoardContainer extends Component<Props, State> {
   }
 
   render() {
-    let { game, onClickPoint } = this.props;
+    let { game, onClickPoint, hoveredBoardPoint } = this.props;
     let { boardWidth, marginTop } = this.state;
 
     if (!boardWidth) {
@@ -88,6 +89,7 @@ export default class BoardContainer extends Component<Props, State> {
                 board={board}
                 markup={markup}
                 width={boardWidth}
+                hoveredBoardPoint={hoveredBoardPoint}
                 onClickPoint={onClickPoint ? this._onClickPoint : undefined}
               />
             ) : null}

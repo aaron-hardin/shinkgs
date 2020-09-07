@@ -9,6 +9,19 @@ export function quoteRegExpPattern(s: any) {
   );
 }
 
+export function getBoardPositions(s: string) {
+  let results = [];
+  const reg = new RegExp(/\b([A-HJ-T])([1][0-9]|[1-9])\b/gi);
+
+  let matchInfo = reg.exec(s);
+  while (matchInfo !== null) {
+    results.push(matchInfo);
+    matchInfo = reg.exec(s);
+  }
+
+  return results;
+}
+
 export function nl2br(s: string) {
   return s.toString().replace(/\r\n|\r|\n/gm, "<br>");
 }

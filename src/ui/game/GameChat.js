@@ -8,6 +8,7 @@ type Props = {
   chatSections: Array<GameChatSection>,
   usersByName: Index<User>,
   onUserDetail: (string) => any,
+  actions: AppActions,
 };
 
 export default class GameChat extends Component<Props> {
@@ -29,6 +30,7 @@ export default class GameChat extends Component<Props> {
             </div>
             <div className="GameChat-section-messages">
               <ChatMessages
+                actions={this.props.actions}
                 currentUser={currentUser}
                 messages={messages}
                 usersByName={usersByName}

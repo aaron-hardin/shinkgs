@@ -6,6 +6,7 @@ import GameTimeSystem from "../game/GameTimeSystem";
 import { A, RichContent } from "../common";
 import UserName from "../user/UserName";
 import { formatLocaleTime } from "../../util/date";
+
 import type {
   User,
   ConversationMessage,
@@ -18,11 +19,12 @@ type Props = {
   message: ConversationMessage,
   sender: User | string,
   onUserDetail: (string) => any,
+  actions: AppActions,
 };
 
 class ChatMessageItem extends Component<Props> {
   render() {
-    let { currentUser, message, sender } = this.props;
+    let { currentUser, message, sender, actions } = this.props;
     // TODO - for some reason this is null sometimes
     if (!sender) {
       sender = "[Unknown]";
@@ -34,6 +36,7 @@ class ChatMessageItem extends Component<Props> {
         (typeof sender === "string" ? sender : sender.name)
           ? " ChatMessages-item-self"
           : ""));
+
     return (
       <div className={className}>
         <div className="ChatMessages-item-content">
@@ -49,7 +52,7 @@ class ChatMessageItem extends Component<Props> {
             </div>
           )}
           <div className="ChatMessages-item-body">
-            <RichContent content={message.body} />
+            <RichContent content={message.body} highlightBoardPositions={true} actions={actions} />
           </div>
         </div>
         {message.date ? (
@@ -122,6 +125,7 @@ type PropsChatMessages = {
   onUserDetail: (string) => any,
   onJoinGame?: (gameId: number | string) => any,
   onSelectChallenge?: (number) => any,
+  actions: AppActions,
 };
 
 export default class ChatMessages extends Component<PropsChatMessages> {
@@ -132,6 +136,7 @@ export default class ChatMessages extends Component<PropsChatMessages> {
       usersByName,
       games,
       onUserDetail,
+      actions,
     } = this.props;
     let displayMessages;
     if (games && games.length) {
@@ -161,6 +166,7 @@ export default class ChatMessages extends Component<PropsChatMessages> {
               message={item.message}
               sender={usersByName[item.message.sender] || item.message.sender}
               onUserDetail={onUserDetail}
+              actions={actions}
             />
           );
         } else if (item.type === "game") {
@@ -181,6 +187,7 @@ export default class ChatMessages extends Component<PropsChatMessages> {
           message={msg}
           sender={usersByName[msg.sender] || msg.sender}
           onUserDetail={onUserDetail}
+          actions={actions}
         />
       ));
     }

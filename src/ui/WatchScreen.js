@@ -22,6 +22,7 @@ type Props = {
   roomsById: Index<Room>,
   usersByName: Index<User>,
   actions: AppActions,
+  hoveredBoardPoint: ?Point,
 };
 
 export default class WatchScreen extends Component<Props> {
@@ -52,6 +53,7 @@ export default class WatchScreen extends Component<Props> {
       roomsById,
       usersByName,
       actions,
+      hoveredBoardPoint,
     } = this.props;
     if (!currentUser) {
       throw new InvariantError("currentUser is required");
@@ -67,6 +69,7 @@ export default class WatchScreen extends Component<Props> {
               roomsById={roomsById}
               currentUser={currentUser}
               actions={actions}
+              hoveredBoardPoint={hoveredBoardPoint}
             />
           </div>
         ) : (

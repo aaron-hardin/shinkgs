@@ -18,18 +18,20 @@ type Props = {
   color: ?PlayerColor,
   mark: ?BoardPointMark,
   label: ?string,
+  hovered: boolean,
   onClick: ?(loc: Point, color?: ?PlayerColor, mark?: ?BoardPointMark) => any,
 };
 
 class BoardStoneSlot extends Component<Props> {
   render() {
-    let { color, mark, label } = this.props;
+    let { color, mark, label, hovered } = this.props;
     return (
       <A button className="Board-stone-slot" onClick={this._onClickPoint}>
         {color ? <div className={"Board-stone Board-stone-" + color} /> : null}
         {mark ? (
           <div className={"Board-stone-mark Board-stone-mark-" + mark} />
         ) : null}
+        {hovered ? (<div className={"Board-stone-mark Board-stone-mark-circle"} />) : null}
         {label ? <div className="Board-stone-label">{label}</div> : null}
       </A>
     );
@@ -47,6 +49,7 @@ type PropsBoard = {
   board: BoardState,
   markup: BoardMarkup,
   width: number,
+  hoveredBoardPoint: ?Point,
   onClickPoint?: ?(
     loc: Point,
     color?: ?PlayerColor,
@@ -56,7 +59,7 @@ type PropsBoard = {
 
 export default class Board extends Component<PropsBoard> {
   render() {
-    let { board, markup, onClickPoint } = this.props;
+    let { board, markup, onClickPoint, hoveredBoardPoint } = this.props;
     let size = board.length;
     let sizeRange = range(size);
     let className =
@@ -124,6 +127,11 @@ export default class Board extends Component<PropsBoard> {
                   let color = board[y][x];
                   let mark = markup.marks[y] && markup.marks[y][x];
                   let label = markup.labels[y] && markup.labels[y][x];
+                  let hovered = false;
+                  if (hoveredBoardPoint && hoveredBoardPoint.x === x && hoveredBoardPoint.y === y) {
+                    hovered = true;
+                  }
+
                   return (
                     <BoardStoneSlot
                       key={y * size + x}
@@ -132,6 +140,7 @@ export default class Board extends Component<PropsBoard> {
                       color={color}
                       mark={mark}
                       label={label}
+                      hovered={hovered}
                       onClick={onClickPoint}
                     />
                   );

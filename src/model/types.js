@@ -462,6 +462,7 @@ export type AppState = {
   +showUnderConstruction: boolean,
   +showFeedbackModal: boolean,
   +reviewGameId: ?number,
+  +hoveredBoardPoint: ?Point,
 };
 
 export type KgsMessage =

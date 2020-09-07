@@ -40,6 +40,7 @@ type Props = {
   roomsById: Index<Room>,
   currentUser: User,
   actions: AppActions,
+  hoveredBoardPoint: ?Point,
 };
 
 type State = {
@@ -116,6 +117,7 @@ export default class GameScreen extends Component<Props, State> {
       usersByName,
       roomsById,
       actions,
+      hoveredBoardPoint,
     } = this.props;
     let { tab, chatSections } = this.state;
     let users = game.users ? game.users.map((name) => usersByName[name]) : [];
@@ -173,6 +175,7 @@ export default class GameScreen extends Component<Props, State> {
             playing={playing}
             onChangeCurrentNode={actions.onChangeCurrentNode}
             onClickPoint={isOurMove || scoring ? this._onClickPoint : undefined}
+            hoveredBoardPoint={hoveredBoardPoint}
           />
           {game.accessDenied ? (
             <div className="GameScreen-access-denied">
@@ -266,6 +269,7 @@ export default class GameScreen extends Component<Props, State> {
                 ) : null}
                 {tab === "chat" ? (
                   <GameChat
+                    actions={actions}
                     currentUser={currentUser}
                     chatSections={chatSections}
                     usersByName={usersByName}
